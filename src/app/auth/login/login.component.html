@@ -1,0 +1,27 @@
+<div class="login-container">
+  <h2>تسجيل الدخول</h2>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="usernameOrEmail">اسم المستخدم أو البريد الإلكتروني:</label>
+      <input type="text" id="usernameOrEmail" formControlName="usernameOrEmail" class="form-control">
+      <div *ngIf="loginForm.get('usernameOrEmail')?.invalid && loginForm.get('usernameOrEmail')?.touched" class="error-message">
+        <div *ngIf="loginForm.get('usernameOrEmail')?.errors?.['required']">اسم المستخدم أو البريد الإلكتروني مطلوب.</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">كلمة المرور:</label>
+      <input type="password" id="password" formControlName="password" class="form-control">
+      <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error-message">
+        <div *ngIf="loginForm.get('password')?.errors?.['required']">كلمة المرور مطلوبة.</div>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="!loginForm.valid" class="btn btn-primary">تسجيل الدخول</button>
+
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  </form>
+  <p class="register-link">ليس لديك حساب؟ <a routerLink="/register">سجل الآن</a></p>
+</div>

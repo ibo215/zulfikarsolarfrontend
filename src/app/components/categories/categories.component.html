@@ -1,0 +1,18 @@
+<div class="categories-container">
+  <h3>التصنيفات</h3>
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+  <ul class="category-list">
+    <li>
+      <a (click)="onCategoryClick(null)" class="category-item all-products">
+        جميع المنتجات
+      </a>
+    </li>
+    <li *ngFor="let category of categories">
+      <a (click)="onCategoryClick(category.id)" class="category-item">
+        {{ category.name }}
+      </a>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,53 @@
+<div class="register-container">
+  <h2>تسجيل حساب جديد</h2>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="username">اسم المستخدم:</label>
+      <input type="text" id="username" formControlName="username" class="form-control">
+      <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" class="error-message">
+        <div *ngIf="registerForm.get('username')?.errors?.['required']">اسم المستخدم مطلوب.</div>
+        <div *ngIf="registerForm.get('username')?.errors?.['minlength']">اسم المستخدم قصير جداً.</div>
+        <div *ngIf="registerForm.get('username')?.errors?.['maxlength']">اسم المستخدم طويل جداً.</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">البريد الإلكتروني:</label>
+      <input type="email" id="email" formControlName="email" class="form-control">
+      <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error-message">
+        <div *ngIf="registerForm.get('email')?.errors?.['required']">البريد الإلكتروني مطلوب.</div>
+        <div *ngIf="registerForm.get('email')?.errors?.['email']">صيغة البريد الإلكتروني غير صحيحة.</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">كلمة المرور:</label>
+      <input type="password" id="password" formControlName="password" class="form-control">
+      <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error-message">
+        <div *ngIf="registerForm.get('password')?.errors?.['required']">كلمة المرور مطلوبة.</div>
+        <div *ngIf="registerForm.get('password')?.errors?.['minlength']">كلمة المرور قصيرة جداً (6 أحرف على الأقل).</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="confirmPassword">تأكيد كلمة المرور:</label>
+      <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control">
+      <div *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched" class="error-message">
+        <div *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">تأكيد كلمة المرور مطلوب.</div>
+      </div>
+      <div *ngIf="registerForm.errors?.['mismatch'] && registerForm.get('confirmPassword')?.touched" class="error-message">
+        كلمتا المرور غير متطابقتين.
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="!registerForm.valid" class="btn btn-primary">تسجيل</button>
+
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+    <div *ngIf="successMessage" class="alert alert-success">
+      {{ successMessage }}
+    </div>
+  </form>
+  <p class="login-link">لديك حساب بالفعل؟ <a routerLink="/login">سجل الدخول</a></p>
+</div>

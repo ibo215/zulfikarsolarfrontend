@@ -1,22 +1,31 @@
-/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
-/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
+/* في tsconfig.json */
 {
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
+    "strictPropertyInitialization": false, // قد تحتاج لتعطيل هذا إذا كان لديك مشاكل في التهيئة
+    "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
     "experimentalDecorators": true,
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "importHelpers": true,
-    "target": "ES2022",
-    "module": "ES2022"
+    "target": "es2022",
+    "module": "es2020",
+    "useDefineForClassFields": false, // تأكد أن هذا false
+    "lib": [
+      "es2020",
+      "dom",
+      "dom.iterable",
+      "ESNext.String" // يمكن إضافتها لبعض الميزات
+    ],
+    "allowSyntheticDefaultImports": false
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

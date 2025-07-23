@@ -1,0 +1,75 @@
+<div class="product-form-container">
+  <h2>{{ isEditMode ? 'تعديل المنتج' : 'إضافة منتج جديد' }}</h2>
+
+  <div *ngIf="isLoading" class="loading-indicator">
+    <div class="spinner"></div>
+    <span>جاري التحميل...</span>
+  </div>
+
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
+    <div class="form-group">
+      <label for="name">اسم المنتج:</label>
+      <input type="text" id="name" formControlName="name" class="form-control">
+      <div *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched" class="error-message">
+        <div *ngIf="productForm.get('name')?.errors?.['required']">اسم المنتج مطلوب.</div>
+        <div *ngIf="productForm.get('name')?.errors?.['minlength']">الحد الأدنى 3 أحرف.</div>
+        <div *ngIf="productForm.get('name')?.errors?.['maxlength']">الحد الأقصى 200 حرف.</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">الوصف:</label>
+      <textarea id="description" formControlName="description" class="form-control"></textarea>
+      <div *ngIf="productForm.get('description')?.invalid && productForm.get('description')?.touched" class="error-message">
+        <div *ngIf="productForm.get('description')?.errors?.['maxlength']">الحد الأقصى 1000 حرف.</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="imageUrl">رابط الصورة:</label>
+      <input type="text" id="imageUrl" formControlName="imageUrl" class="form-control">
+      <div *ngIf="productForm.get('imageUrl')?.invalid && productForm.get('imageUrl')?.touched" class="error-message">
+        <div *ngIf="productForm.get('imageUrl')?.errors?.['pattern']">صيغة الرابط غير صحيحة.</div>
+        <div *ngIf="productForm.get('imageUrl')?.errors?.['maxlength']">الحد الأقصى 500 حرف.</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="price">السعر:</label>
+      <input type="number" id="price" formControlName="price" class="form-control">
+      <div *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched" class="error-message">
+        <div *ngIf="productForm.get('price')?.errors?.['required']">السعر مطلوب.</div>
+        <div *ngIf="productForm.get('price')?.errors?.['min']">يجب أن يكون السعر أكبر من صفر.</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="categoryId">التصنيف:</label>
+      <select id="categoryId" formControlName="categoryId" class="form-control">
+        <option value="" disabled>اختر تصنيفًا</option>
+        <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+      </select>
+      <div *ngIf="productForm.get('categoryId')?.invalid && productForm.get('categoryId')?.touched" class="error-message">
+        <div *ngIf="productForm.get('categoryId')?.errors?.['required']">التصنيف مطلوب.</div>
+      </div>
+    </div>
+
+    <div class="form-group checkbox-group">
+      <input type="checkbox" id="isActive" formControlName="isActive">
+      <label for="isActive">نشط / متوفر</label>
+    </div>
+
+    <button type="submit" [disabled]="!productForm.valid" class="btn btn-primary">
+      {{ isEditMode ? 'تحديث المنتج' : 'إضافة المنتج' }}
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="router.navigate(['/admin/products'])">إلغاء</button>
+
+
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+    <div *ngIf="successMessage" class="alert alert-success">
+      {{ successMessage }}
+    </div>
+  </form>
+</div>

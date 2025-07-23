@@ -1,0 +1,35 @@
+<div class="main-content-wrapper">
+  <div class="sidebar">
+    <app-categories (categorySelected)="onCategorySelected($event)"></app-categories>
+  </div>
+  <div class="products-section">
+    <div class="products-container">
+      <h2>منتجاتنا</h2>
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
+      <div *ngIf="products.length === 0 && !errorMessage" class="no-products-message">
+        لا توجد منتجات لعرضها حاليًا.
+      </div>
+
+      <div class="product-list">
+        <div *ngFor="let product of products" class="product-card">
+          <img [src]="product.imageUrl || 'assets/placeholder.png'" alt="{{ product.name }}" class="product-image">
+          <h3>{{ product.name }}</h3>
+          <p class="product-description">{{ product.description }}</p>
+          <p class="product-price">{{ product.price | currency:'USD':'symbol':'1.2-2' }}</p>
+          <p class="product-category">التصنيف: {{ product.categoryName }}</p>
+          <p class="product-status" [class.active]="product.isActive" [class.inactive]="!product.isActive">
+            الحالة: {{ product.isActive ? 'متوفر' : 'غير متوفر' }}
+          </p>
+          <p class="product-dates">
+            أضيف في: {{ product.dateAdded | date:'shortDate' }}
+            <span *ngIf="product.lastModified"> | آخر تعديل: {{ product.lastModified | date:'shortDate' }}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

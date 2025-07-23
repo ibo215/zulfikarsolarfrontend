@@ -1,0 +1,54 @@
+<div class="admin-products-container">
+  <h2>إدارة المنتجات</h2>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="isLoading" class="loading-indicator">
+    <div class="spinner"></div>
+    <span>جاري التحميل...</span>
+  </div>
+
+  <button *ngIf="isAdmin" class="btn btn-primary add-new-product-btn" (click)="addProduct()">
+    إضافة منتج جديد
+  </button>
+
+  <div *ngIf="!isLoading && products.length === 0 && !errorMessage" class="no-products-message">
+    لا توجد منتجات لإدارتها حاليًا.
+  </div>
+
+  <table class="products-table" *ngIf="!isLoading && products.length > 0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>الاسم</th>
+        <th>التصنيف</th>
+        <th>السعر</th>
+        <th>الحالة</th>
+        <th>أضيف في</th>
+        <th>آخر تعديل</th>
+        <th *ngIf="isAdmin">الإجراءات</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.id }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.categoryName }}</td>
+        <td>{{ product.price | currency:'USD':'symbol':'1.2-2' }}</td>
+        <td>
+          <span [class.active-status]="product.isActive" [class.inactive-status]="!product.isActive">
+            {{ product.isActive ? 'نشط' : 'غير نشط' }}
+          </span>
+        </td>
+        <td>{{ product.dateAdded | date:'shortDate' }}</td>
+        <td>{{ product.lastModified ? (product.lastModified | date:'shortDate') : 'لا يوجد' }}</td>
+        <td *ngIf="isAdmin" class="actions-column">
+          <button class="btn btn-edit" (click)="editProduct(product.id)">تعديل</button>
+          <button class="btn btn-delete" (click)="deleteProduct(product.id)">حذف</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
